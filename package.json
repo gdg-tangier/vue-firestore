@@ -1,6 +1,6 @@
 {
     "name": "vue-firestore",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "description": "Vue plugin for firestore",
     "main": "index.js",
     "scripts": {
