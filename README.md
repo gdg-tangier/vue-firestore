@@ -2,6 +2,11 @@
 <img src="https://i.imgur.com/ki0rbrX.png">
 </p>
 
+<p align="center">
+<img src="https://img.shields.io/npm/v/vue-firestore.svg">
+<img src="https://img.shields.io/npm/l/vue-firestore.svg">
+</p>
+
 ## vue-firestore
 
 Vue.js binding for firebase cloud firestore.
