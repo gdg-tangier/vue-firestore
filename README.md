@@ -40,7 +40,7 @@ var vm = new Vue({
 })
 ```
 
-You can get access to firestore properties with `this.$fireStore`.
+You can get access to firestore properties with `this.$firestore`.
 
 #### Adding Data to collections
 
