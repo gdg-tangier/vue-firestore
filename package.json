@@ -1,8 +1,8 @@
 {
     "name": "vue-firestore",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Vue plugin for firestore",
-    "main": "./dist/myfirebase.js",
+    "main": "./dist/vue-firestore.js",
     "scripts": {
         "test": "karma start karma.conf.js --single-run",
         "build": "webpack"
