@@ -5,6 +5,7 @@
 <p align="center">
 <img src="https://img.shields.io/npm/v/vue-firestore.svg">
 <img src="https://img.shields.io/npm/l/vue-firestore.svg">
+<img src="https://travis-ci.org/gdg-tangier/vue-firestore.svg?branch=master">
 </p>
 
 ## vue-firestore
