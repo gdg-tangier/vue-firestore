@@ -56,6 +56,3 @@ describe('vue-firestore', function() {
         })
     })
 })
-
-/*
- */
