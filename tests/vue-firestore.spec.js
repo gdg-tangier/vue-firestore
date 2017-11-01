@@ -21,6 +21,15 @@ describe('vue-firestore', function() {
     var fireStore
     beforeEach(function(done) {
         fireStore = firebase.firestore()
+        var items = fireStore.collection("items").get()
+
+        //delete items collection before each tests
+        itmes.then(function(snapshot) {
+            snapshot.forEach(function(doc) {
+                items.doc(doc.id).delete()
+            })
+        })
+
         done()
     })
 
