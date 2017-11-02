@@ -7,6 +7,13 @@
         "test": "karma start karma.conf.js --single-run",
         "build": "webpack"
     },
+    "keywords": [
+        "vue",
+        "firebase",
+        "cloud",
+        "cloud firestore",
+        "realtime"
+    ],
     "author": "Amrani Houssain",
     "license": "MIT",
     "peerDependencies": {
