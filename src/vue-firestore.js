@@ -82,6 +82,13 @@ let install = function(_Vue) {
     Vue.mixin(Mixin)
     var mergeStrats = Vue.config.optionMergeStrategies
     mergeStrats.fireStore = mergeStrats.methods
+
+    // Manually binding
+    Vue.prototype.$binding = function(key, source) {
+        ensureRefs(this)
+        bind(this, key, source)
+        console.log("Done with " + key)
+    }
 }
 
 export default install
