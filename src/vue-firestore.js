@@ -87,7 +87,6 @@ let install = function(_Vue) {
     Vue.prototype.$binding = function(key, source) {
         ensureRefs(this)
         bind(this, key, source)
-        console.log("Done with " + key)
     }
 }
 
