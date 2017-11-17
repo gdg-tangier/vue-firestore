@@ -165,7 +165,6 @@ var Mixin = {
     Vue.prototype.$binding = function (key, source) {
         (0, _utils.ensureRefs)(this);
         bind(this, key, source);
-        console.log("Done with " + key);
     };
 };
 
