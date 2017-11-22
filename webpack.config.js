@@ -8,7 +8,7 @@ module.exports = {
         path: path.resolve(__dirname, './dist'),
         filename: 'vue-firestore.js',
         library: 'Vue-firestore',
-        libraryTarget: 'amd'
+        libraryTarget: 'umd'
     },
     module: {
         rules: [{
