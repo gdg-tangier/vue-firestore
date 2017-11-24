@@ -19,20 +19,16 @@ function defineReactive(vm, key, val) {
 }
 
 /**
- * Listen for changes, and bind firestore source to a key on a Vue instance.
+ * Bind firestore collection source to a key on a Vue instance.
  * 
  * @param {Vue} vm 
  * @param {string} key 
  * @param {object} source 
  */
-function bind(vm, key, source) {
-
+function collections(vm, key, source) {
     vm.$firestore[key] = source
-
     let container = []
-
     defineReactive(vm, key, container);
-
     source.onSnapshot((doc) => {
         doc.docChanges.forEach(snapshot => {
             switch (snapshot.type) {
@@ -53,6 +49,39 @@ function bind(vm, key, source) {
             }
         })
     })
+}
+
+/**
+ * Bind firestore doc source to a key on a Vue instance.
+ * 
+ * @param {Vue} vm 
+ * @param {string} key 
+ * @param {object} source 
+ */
+function documents(vm, key, source) {
+    vm.$firestore[key] = source
+    let container = []
+    defineReactive(vm, key, container);
+    source.onSnapshot((doc) => {
+        if (doc.exists) {
+            container = normalize(doc)
+        }
+    })
+}
+
+/**
+ * Listen for changes, and bind firestore doc source to a key on a Vue instance.
+ * 
+ * @param {Vue} vm 
+ * @param {string} key 
+ * @param {object} source 
+ */
+function bind(vm, key, source) {
+    if (source.where) {
+        collections(vm, key, source)
+    } else {
+        documents(vm, key, source)
+    }
 }
 
 let init = function() {
