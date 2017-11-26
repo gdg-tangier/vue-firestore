@@ -149,13 +149,11 @@ function collections(vm, key, source) {
  */
 function documents(vm, key, source) {
     vm.$firestore[key] = source;
-    vm[key] = null;
-    //defineReactive(vm, key, containers);
-    //let container = Object.create(null)
-    //vm[key] = container
+    var container = [];
+    defineReactive(vm, key, container);
     source.onSnapshot(function (doc) {
         if (doc.exists) {
-            var container = (0, _utils.normalize)(doc);
+            container = (0, _utils.normalize)(doc);
             vm[key] = container;
         }
     });
