@@ -60,10 +60,11 @@ function collections(vm, key, source) {
  */
 function documents(vm, key, source) {
     vm.$firestore[key] = source
-    vm[key] = null
+    let container = []
+    defineReactive(vm, key, container);
     source.onSnapshot((doc) => {
         if (doc.exists) {
-            let container = normalize(doc)
+            container = normalize(doc)
             vm[key] = container
         }
     })
