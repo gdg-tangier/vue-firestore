@@ -114,7 +114,13 @@ function defineReactive(vm, key, val) {
  * @param {string} key 
  * @param {object} source 
  */
-function collections(vm, key, source) {
+function collections(_ref) {
+    var vm = _ref.vm,
+        key = _ref.key,
+        source = _ref.source,
+        resolve = _ref.resolve,
+        reject = _ref.reject;
+
     vm.$firestore[key] = source;
     var container = [];
     defineReactive(vm, key, container);
@@ -136,7 +142,8 @@ function collections(vm, key, source) {
                     }
                     break;
             }
-        });
+            resolve(container);
+        }, reject);
     });
 }
 
@@ -147,7 +154,13 @@ function collections(vm, key, source) {
  * @param {string} key 
  * @param {object} source 
  */
-function documents(vm, key, source) {
+function documents(_ref2) {
+    var vm = _ref2.vm,
+        key = _ref2.key,
+        source = _ref2.source,
+        resolve = _ref2.resolve,
+        reject = _ref2.reject;
+
     vm.$firestore[key] = source;
     var container = [];
     defineReactive(vm, key, container);
@@ -155,6 +168,10 @@ function documents(vm, key, source) {
         if (doc.exists) {
             container = (0, _utils.normalize)(doc);
             vm[key] = container;
+            resolve(vm[key]);
+        } else {
+            delete vm.$firestore[key];
+            reject("Doc is not exist");
         }
     });
 }
@@ -167,11 +184,13 @@ function documents(vm, key, source) {
  * @param {object} source 
  */
 function bind(vm, key, source) {
-    if (source.where) {
-        collections(vm, key, source);
-    } else {
-        documents(vm, key, source);
-    }
+    return new Promise(function (resolve, reject) {
+        if (source.where) {
+            collections({ vm: vm, key: key, source: source, resolve: resolve, reject: reject });
+        } else {
+            documents({ vm: vm, key: key, source: source, resolve: resolve, reject: reject });
+        }
+    });
 }
 
 var init = function init() {
@@ -204,7 +223,7 @@ var Mixin = {
     // Manually binding
     Vue.prototype.$binding = function (key, source) {
         (0, _utils.ensureRefs)(this);
-        bind(this, key, source);
+        return bind(this, key, source);
     };
 };
 
