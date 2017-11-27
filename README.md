@@ -128,3 +128,6 @@ updatePerson: function(person) {
     })
 }
 ```
+
+## LICENSE
+[MIT](https://opensource.org/licenses/MIT)
