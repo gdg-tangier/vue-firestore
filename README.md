@@ -18,10 +18,15 @@ Installation via npm : `npm install vue-firestore --save`
 
 ### Usage
 
+vue-firestore supports binding for the both (collections/docs) in realtime, you can bind your properties in tow ways using `firestore` option or bind them manually with `$binding`.
+
+1. using `firestore` option.
+
 ```javascript
-var Vue = require('vue')
-var VueFirestore = require('vue-firestore')
-var Firebase = require('firebase')
+
+import Vue from 'vue'
+import VueFirestore from 'vue-firestore'
+import Firebase from 'firebase'
 
 require('firebase/firestore')
 
@@ -35,12 +40,38 @@ var vm = new Vue({
   el: '#app',
   firestore() {
     return {
-        persons: firestore.collection('persons')
+        // Collection
+        persons: firestore.collection('persons'),
+        // Doc
+        ford: firestore.collection('cars').doc('ford')
     }
   }
 })
 ```
 
+2. Manually binding
+
+You can bind your docs/collection manually using `this.$binding`, and wait for data to be resolved, this case is really usful when we want to wait for data to be rendred and do some speccific actions. 
+
+```javascript
+...
+mounted() {
+  // Binding Collections
+  this.$binding("users", firebase.firestore.collection("users"))
+  .then((users) => {
+    console.log(users) // => __ob__: Observer
+  })
+  
+  // Binding Docs
+  this.$binding("Ford", firebase.firestore().collection("cars").doc("ford"))
+  .then((ford) => {
+    console.log(ford) // => __ob__: Observer
+  }).catch(err => {
+    console.error(err)
+  })
+}
+...
+```
 You can get access to firestore properties with `this.$firestore`.
 
 #### Adding Data to collections
