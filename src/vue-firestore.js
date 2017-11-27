@@ -25,7 +25,7 @@ function defineReactive(vm, key, val) {
  * @param {string} key 
  * @param {object} source 
  */
-function collections(vm, key, source) {
+function collections({ vm, key, source, resolve, reject }) {
     vm.$firestore[key] = source
     let container = []
     defineReactive(vm, key, container);
@@ -47,7 +47,8 @@ function collections(vm, key, source) {
                     }
                     break;
             }
-        })
+            resolve(container)
+        }, reject)
     })
 }
 
@@ -58,7 +59,7 @@ function collections(vm, key, source) {
  * @param {string} key 
  * @param {object} source 
  */
-function documents(vm, key, source) {
+function documents({ vm, key, source, resolve, reject }) {
     vm.$firestore[key] = source
     let container = []
     defineReactive(vm, key, container);
@@ -66,6 +67,10 @@ function documents(vm, key, source) {
         if (doc.exists) {
             container = normalize(doc)
             vm[key] = container
+            resolve(vm[key])
+        } else {
+            delete vm.$firestore[key]
+            reject("Doc is not exist")
         }
     })
 }
@@ -78,11 +83,13 @@ function documents(vm, key, source) {
  * @param {object} source 
  */
 function bind(vm, key, source) {
-    if (source.where) {
-        collections(vm, key, source)
-    } else {
-        documents(vm, key, source)
-    }
+    return new Promise((resolve, reject) => {
+        if (source.where) {
+            collections({ vm, key, source, resolve, reject })
+        } else {
+            documents({ vm, key, source, resolve, reject })
+        }
+    })
 }
 
 let init = function() {
@@ -116,7 +123,7 @@ let install = function(_Vue) {
     // Manually binding
     Vue.prototype.$binding = function(key, source) {
         ensureRefs(this)
-        bind(this, key, source)
+        return bind(this, key, source)
     }
 }
 
