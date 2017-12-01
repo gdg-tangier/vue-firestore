@@ -57,7 +57,7 @@ You can bind your docs/collection manually using `this.$binding`, and wait for d
 ...
 mounted() {
   // Binding Collections
-  this.$binding("users", firebase.firestore.collection("users"))
+  this.$binding("users", firebase.firestore().collection("users"))
   .then((users) => {
     console.log(users) // => __ob__: Observer
   })
