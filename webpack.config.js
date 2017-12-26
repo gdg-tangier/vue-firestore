@@ -10,6 +10,13 @@ module.exports = {
         library: 'Vue-firestore',
         libraryTarget: 'umd'
     },
+
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            compress: { warnings: false },
+            sourceMap: true
+        })
+    ],
     module: {
         rules: [{
             test: /\.js$/,
