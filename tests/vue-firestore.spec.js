@@ -34,34 +34,36 @@ describe('vue-firestore', function() {
     })
 
     describe('Check Function options', function() {
-        it('Option is callable as function?', function(done) {
-            var spy = sinon.spy()
-            expect(function() {
-                new Vue({
-                    firestore: spy
-                }).$mount()
-            }).to.not.throw()
-            expect(spy.calledOnce).to.be.true
-            done()
+            it('Option is callable as function?', function(done) {
+                var spy = sinon.spy()
+                expect(function() {
+                    new Vue({
+                        firestore: spy
+                    }).$mount()
+                }).to.not.throw()
+                expect(spy.calledOnce).to.be.true
+                done()
+            })
         })
-    })
-    describe('Add data to firebase database', function() {
-        it("will add data to cloud firestore", function(done) {
-            var vm = new Vue({
-                firestore: function() {
-                    return {
-                        items: fireStore.collection('items')
+        /*
+        describe('Add data to firebase database', function() {
+            it("will add data to cloud firestore", function(done) {
+                var vm = new Vue({
+                    firestore: function() {
+                        return {
+                            items: fireStore.collection('items')
+                        }
                     }
-                }
-            }).$mount()
-            fireStore.collection('items').doc("mybook").set({
-                title: "MyBook 1",
-                author: "My Author"
-            }).then(function() {
-                expect(vm.items).to.deep.equal([
-                    { ".key": "mybook", title: "MyBook 1", author: "My Author" }
-                ])
-            }).then(done, done)
+                }).$mount()
+                fireStore.collection('items').doc("mybook").set({
+                    title: "MyBook 1",
+                    author: "My Author"
+                }).then(function() {
+                    expect(vm.items).to.deep.equal([
+                        { ".key": "mybook", title: "MyBook 1", author: "My Author" }
+                    ])
+                }).then(done, done)
+            })
         })
-    })
+        */
 })
