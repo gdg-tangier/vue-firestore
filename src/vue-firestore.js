@@ -127,4 +127,10 @@ let install = function(_Vue) {
     }
 }
 
+// Install automatically (browser).
+if (typeof window !== 'undefined' && window.Vue) {
+    install(window.Vue)
+}
+
+
 export default install
