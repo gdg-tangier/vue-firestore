@@ -48,7 +48,9 @@ function collections({ vm, key, source, resolve, reject }) {
                     break;
             }
             resolve(container)
-        }, reject)
+        }, (error) => {
+            reject(error)
+        })
     })
 }
 
@@ -70,7 +72,7 @@ function documents({ vm, key, source, resolve, reject }) {
             resolve(vm[key])
         } else {
             delete vm.$firestore[key]
-            reject("Doc is not exist")
+            reject("Doc is not exist or permission denied")
         }
     })
 }
