@@ -12,7 +12,41 @@
 
 Vue.js binding for firebase cloud firestore.
 
+### Try it out: [Demo](https://tinyurl.com/yawseaer)
+
 ### Installation
+
+#### Globally (Browser)
+
+vue-firestore will be installed automatically.
+
+```html
+<!-- Vue -->   
+<script src="https://unpkg.com/vue"></script>
+<!-- Firebase -->   
+<script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+<!-- Firestore -->   
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-firestore.js"></script>
+<!-- vue-firestore -->   
+<script src="https://unpkg.com/vue-firestore"></script>
+  
+<script>        
+  // Firebase config.
+  var config = {
+        apiKey: "your-apik-ey",
+        authDomain: "your-auth-domain",
+        databaseURL: "your-database-url",
+        projectId: "your-project-id",
+        storageBucket: "your-storage-bucket",
+        messagingSenderId: "your-messaing-sender-id"
+      }
+        
+  // Initialize Firebase.
+  firebase.initializeApp(config);
+</script>
+```
+
+#### npm
 
 Installation via npm : `npm install vue-firestore --save`
 
