@@ -163,5 +163,8 @@ updatePerson: function(person) {
 }
 ```
 
+## More Resources
+- [Quick Start on Alligator.io](https://alligator.io/vuejs/vue-cloud-firestore/)
+
 ## LICENSE
 [MIT](https://opensource.org/licenses/MIT)
