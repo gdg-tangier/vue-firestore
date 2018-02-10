@@ -85,7 +85,7 @@ var vm = new Vue({
 
 2. Manually binding
 
-You can bind your docs/collection manually using `this.$binding`, and wait for data to be resolved, this case is really usful when we want to wait for data to be rendred and do some speccific actions. 
+You can bind your docs/collection manually using `this.$binding`, and wait for data to be resolved, this case is really useful when we want to wait for data to be rendered and do some specific actions.
 
 ```javascript
 ...
