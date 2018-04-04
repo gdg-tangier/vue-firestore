@@ -98,7 +98,8 @@ function bind(vm, key, source) {
     })
 }
 
-let init = function() {
+// Initialize.
+let init = function () {
     var bindings = this.$options.firestore
     if (typeof bindings === 'function') bindings = bindings.call(this)
     if (!bindings) return
@@ -108,11 +109,23 @@ let init = function() {
     }
 }
 
+// Before Destroy.
+let destroy = function () {
+    if (!this.$firestore) return
+    for (var key in this.$firestore) {
+        if (this.$firestore[key]) {
+            this.$unbind(key)
+        }
+    }
+    this.$firestore = null
+}
+
 /**
  * Vue Mixin
  */
 let Mixin = {
-    created: init
+    created: init,
+    beforeDestroy: destroy
 }
 
 /**
@@ -120,14 +133,14 @@ let Mixin = {
  * 
  * @param {Vue} _Vue 
  */
-let install = function(_Vue) {
+let install = function (_Vue) {
     Vue = _Vue
     Vue.mixin(Mixin)
     var mergeStrats = Vue.config.optionMergeStrategies
     mergeStrats.fireStore = mergeStrats.methods
 
     // Manually binding
-    Vue.prototype.$binding = function(key, source) {
+    Vue.prototype.$binding = function (key, source) {
         ensureRefs(this)
         return bind(this, key, source)
     }
