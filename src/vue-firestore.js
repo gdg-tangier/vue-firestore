@@ -30,7 +30,7 @@ function collections({ vm, key, source, resolve, reject }) {
     let container = []
     defineReactive(vm, key, container);
     source.onSnapshot((doc) => {
-        doc.docChanges.forEach(snapshot => {
+        doc.docChanges().forEach(snapshot => {
             switch (snapshot.type) {
                 case "added":
                     container.splice(snapshot.newIndex, 0, normalize(snapshot))
