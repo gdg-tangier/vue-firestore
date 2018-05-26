@@ -52,7 +52,7 @@ Installation via npm : `npm install vue-firestore --save`
 
 ### Usage
 
-vue-firestore supports binding for the both (collections/docs) in realtime, you can bind your properties in tow ways using `firestore` option or bind them manually with `$binding`.
+vue-firestore supports binding for the both (collections/docs) in realtime, you can bind your properties in two ways using `firestore` option or bind them manually with `$binding`.
 
 1. using `firestore` option.
 
