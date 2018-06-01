@@ -144,6 +144,10 @@ let install = function (_Vue) {
     ensureRefs(this)
     return bind(this, key, source)
   }
+
+  Vue.prototype.$unbind = function (key) {
+    delete this.$firestore[key]
+  }
 }
 
 // Install automatically (browser).
