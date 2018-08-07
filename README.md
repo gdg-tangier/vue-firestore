@@ -12,6 +12,10 @@
 
 Vue.js binding for firebase cloud firestore.
 
+### Prerequisites
+
+Firebase ^5.0.0
+
 ### Try it out: [Demo](https://tinyurl.com/yawseaer)
 
 ### Installation
