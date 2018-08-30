@@ -28,9 +28,9 @@ vue-firestore will be installed automatically.
 <!-- Vue -->   
 <script src="https://unpkg.com/vue"></script>
 <!-- Firebase -->   
-<script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.3.1/firebase.js"></script>
 <!-- Firestore -->   
-<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.3.1/firebase-firestore.js"></script>
 <!-- vue-firestore -->   
 <script src="https://unpkg.com/vue-firestore"></script>
   
