@@ -18,7 +18,7 @@
     "author": "Amrani Houssain",
     "license": "MIT",
     "peerDependencies": {
-        "firebase": "^4.x.x"
+        "firebase": "^5.x.x"
     },
     "devDependencies": {
         "babel-core": "^6.24.1",
