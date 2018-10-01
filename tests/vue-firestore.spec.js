@@ -21,6 +21,7 @@ describe('vue-firestore', function() {
     var fireStore
     beforeEach(function(done) {
         fireStore = firebase.firestore()
+        fireStore.settings({ timestampsInSnapshots: true })
         var items = fireStore.collection("items").get()
 
         //delete items collection before each tests
