@@ -57,7 +57,7 @@ function collections ({ vm, key, source, resolve, reject }) {
 }
 
 // WIP
-function collectionOfObjects({vm, key, source, resolve, reject}) {
+function collectionOfObjects ({vm, key, source, resolve, reject}) {
   vm.$firestore[key] = source
   let container = {}
   defineReactive(vm, key, container)
@@ -68,7 +68,7 @@ function collectionOfObjects({vm, key, source, resolve, reject}) {
           Vue.set(vm[key], snapshot.doc.id, snapshot.doc.data())
           break
         case 'removed':
-          Vue.delete(vm[key], snapshot.doc.id) 
+          Vue.delete(vm[key], snapshot.doc.id)
           break
         case 'modified':
           Vue.set(vm[key], snapshot.doc.id, snapshot.doc.data())
