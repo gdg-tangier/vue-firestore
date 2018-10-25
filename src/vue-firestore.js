@@ -56,6 +56,33 @@ function collections ({ vm, key, source, resolve, reject }) {
   })
 }
 
+// WIP
+function collectionOfObjects({vm, key, source, resolve, reject}) {
+  vm.$firestore[key] = source
+  let container = {}
+  defineReactive(vm, key, container)
+  source.onSnapshot((doc) => {
+    doc.docChanges().forEach(snapshot => {
+      switch (snapshot.type) {
+        case 'added':
+          Vue.set(vm[key], snapshot.doc.id, snapshot.doc.data())
+          break
+        case 'removed':
+          Vue.delete(vm[key], snapshot.doc.id) 
+          break
+        case 'modified':
+          Vue.set(vm[key], snapshot.doc.id, snapshot.doc.data())
+          break
+      }
+    }, (error) => {
+      reject(error)
+    })
+    resolve(container)
+  }, (error) => {
+    reject(error)
+  })
+}
+
 /**
  * Bind firestore doc source to a key on a Vue instance.
  *
@@ -91,7 +118,8 @@ function documents ({ vm, key, source, resolve, reject }) {
 function bind (vm, key, source) {
   return new Promise((resolve, reject) => {
     if (source.where) {
-      collections({ vm, key, source, resolve, reject })
+      // collections({ vm, key, source, resolve, reject })
+      collectionOfObjects({ vm, key, source, resolve, reject })
     } else {
       documents({ vm, key, source, resolve, reject })
     }
