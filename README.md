@@ -76,7 +76,7 @@ const firestore = firebaseApp.firestore();
 
 var vm = new Vue({
   el: '#app',
-  firestore() {
+  firestore () {
     return {
         // Collection
         persons: firestore.collection('persons'),
@@ -93,7 +93,7 @@ You can bind your docs/collection manually using `this.$binding`, and wait for d
 
 ```javascript
 ...
-mounted() {
+mounted () {
   // Binding Collections
   this.$binding("users", firebase.firestore().collection("users"))
   .then((users) => {
@@ -117,13 +117,13 @@ You can get access to firestore properties with `this.$firestore`.
 ```javascript
 var vm = new Vue({
   el: '#app',
-  firestore: function() {
+  firestore: function () {
     return {
         persons: firestore.collection('persons')
     }
   },
   methods:{
-    addData: function() {
+    addData: function () {
         this.$firestore.persons.add({
             firstname: "Amrani",
             lastname: "Houssain"
@@ -156,10 +156,10 @@ You could delete or update a json document of a collection using the property `.
 
 ```javascript
 // Vue methods
-deletePerson: function(person) {
+deletePerson: function (person) {
     this.$firestore.persons.doc(person['.key']).delete()
 },
-updatePerson: function(person) {
+updatePerson: function (person) {
     this.$firestore.persons.doc(person['.key']).update({
         name: "Amrani Houssain"
         github: "@amranidev"
