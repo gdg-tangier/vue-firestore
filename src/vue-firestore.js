@@ -100,7 +100,7 @@ function documents ({ vm, key, source, resolve, reject }) {
       vm[key] = container
     } else {
       delete vm.$firestore[key]
-      reject(new Error('This document is not exist or permission denied'))
+      reject(new Error(`This document (${key}) is not exist or permission denied.`))
     }
     resolve(vm[key])
   }, (error) => {
@@ -118,8 +118,7 @@ function documents ({ vm, key, source, resolve, reject }) {
 function bind (vm, key, source) {
   return new Promise((resolve, reject) => {
     if (source.where) {
-      // collections({ vm, key, source, resolve, reject })
-      collectionOfObjects({ vm, key, source, resolve, reject })
+      collections({ vm, key, source, resolve, reject })
     } else {
       documents({ vm, key, source, resolve, reject })
     }
@@ -169,8 +168,17 @@ let install = function (_Vue) {
 
     // Manually binding
   Vue.prototype.$binding = function (key, source) {
-    ensureRefs(this)
+    this.$firestore = Object.create(null)
     return bind(this, key, source)
+  }
+
+  // Bind Collection As Object
+  Vue.prototype.$bindCollectionAsObject = function (key, source) {
+    this.$firestore = Object.create(null)
+    let vm = this
+    return new Promise((resolve, reject) => {
+      collectionOfObjects({vm, key, source, resolve, reject})
+    })
   }
 
   Vue.prototype.$unbind = function (key) {
