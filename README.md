@@ -5,6 +5,7 @@
 <p align="center">
 <img src="https://img.shields.io/npm/v/vue-firestore.svg">
 <img src="https://img.shields.io/npm/l/vue-firestore.svg">
+<img src="https://img.shields.io/npm/dt/vue-firestore.svg">
 <img src="https://travis-ci.org/gdg-tangier/vue-firestore.svg?branch=master">
 </p>
 
@@ -87,6 +88,31 @@ var vm = new Vue({
 })
 ```
 
+You can pass an object to the `firestore()` function.
+
+As you may know, firestore source returns a promise, so you can handle it if it's resolved by `resolve` function
+or rejected by `reject` function, this case is really useful when we want to wait for data to be rendered and do some specific actions.
+
+```javascript
+firestore () {
+  return {
+    persons: {
+      // collection reference.
+      ref: firestore.collection('persons'),
+      // Bind the collection as an object if you would like to.
+      objects: true,
+      resolve: (data) => {
+          // collection is resolved
+      },
+      reject: (err) => {
+          // collection is rejected
+      }
+    }
+  }
+}
+
+```
+
 2. Manually binding
 
 You can bind your docs/collection manually using `this.$binding`, and wait for data to be resolved, this case is really useful when we want to wait for data to be rendered and do some specific actions.
@@ -110,6 +136,26 @@ mounted () {
 }
 ...
 ```
+Vue firestore latest release supports binding collections as objects, you can bind the collection manually by:`this.$bindCollectionAsObject(key, source)` or you can explecityly do that by adding the `objetcs :true` to firestore function, see the previous exmaple above.
+
+Vue firestore latest release supports binding collections as objects, you can bind the collection manually by `this.$bindCollectionAsObject(key, source)` or you can explicitly do that by adding `{objects: true}` to `firestore()` function, see the previous example above.
+
+The normalize resutls of `$bindCollectionAsObject`:
+
+```
+{
+    tjlAXoQ3VAoNiJcka9: { 
+        firstname: "Jhon",
+        lastname: "Doe"
+    },
+    fb7AcoG3QAoCiJcKa9: {
+        firstname: "Houssain",
+        lastname: "Amrani"
+    }
+}
+```
+
+
 You can get access to firestore properties with `this.$firestore`.
 
 #### Adding Data to collections
