@@ -136,7 +136,6 @@ mounted () {
 }
 ...
 ```
-Vue firestore latest release supports binding collections as objects, you can bind the collection manually by:`this.$bindCollectionAsObject(key, source)` or you can explecityly do that by adding the `objetcs :true` to firestore function, see the previous exmaple above.
 
 Vue firestore latest release supports binding collections as objects, you can bind the collection manually by `this.$bindCollectionAsObject(key, source)` or you can explicitly do that by adding `{objects: true}` to `firestore()` function, see the previous example above.
 
