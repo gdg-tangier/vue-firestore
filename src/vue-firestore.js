@@ -1,4 +1,4 @@
-import { normalize, ensureRefs } from './utils/utils'
+import { normalize, ensureRefs, isObject } from './utils/utils'
 
 // Vue binding
 let Vue
@@ -57,7 +57,7 @@ function collections ({ vm, key, source, resolve, reject }) {
 }
 
 // WIP
-function collectionOfObjects ({vm, key, source, resolve, reject}) {
+function collectionOfObjects ({ vm, key, source, resolve, reject }) {
   vm.$firestore[key] = source
   let container = {}
   defineReactive(vm, key, container)
@@ -115,14 +115,36 @@ function documents ({ vm, key, source, resolve, reject }) {
  * @param {string} key
  * @param {object} source
  */
-function bind (vm, key, source) {
-  return new Promise((resolve, reject) => {
-    if (source.where) {
+function bind (vm, key, source, params = {}) {
+  let resolving = null
+  let rejecting = null
+  let objects = params.objects ? true : null
+
+  if (isObject(source) && source.hasOwnProperty('ref')) {
+    resolving = source.resolve ? source.resolve : () => {}
+    rejecting = source.reject ? source.reject : () => {}
+    objects = source.objects ? true : null
+    source = source.ref
+  }
+
+  var binding = new Promise((resolve, reject) => {
+    if (objects) {
+      collectionOfObjects({ vm, key, source, resolve, reject })
+    } else if (source.where) {
       collections({ vm, key, source, resolve, reject })
     } else {
       documents({ vm, key, source, resolve, reject })
     }
   })
+
+  if (resolving || resolving) {
+    binding.then((res) => {
+      resolving(res)
+    })
+    .catch((err) => rejecting(err))
+  } else {
+    return binding
+  }
 }
 
 // Initialize.
@@ -175,10 +197,7 @@ let install = function (_Vue) {
   // Bind Collection As Object
   Vue.prototype.$bindCollectionAsObject = function (key, source) {
     this.$firestore = Object.create(null)
-    let vm = this
-    return new Promise((resolve, reject) => {
-      collectionOfObjects({vm, key, source, resolve, reject})
-    })
+    return bind(this, key, source, { objects: true })
   }
 
   Vue.prototype.$unbind = function (key) {
