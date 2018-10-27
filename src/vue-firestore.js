@@ -116,13 +116,13 @@ function documents ({ vm, key, source, resolve, reject }) {
  * @param {object} source
  */
 function bind (vm, key, source, params = {}) {
-  let resolving = null
-  let rejecting = null
+  let resolve = null
+  let reject = null
   let objects = params.objects ? true : null
 
   if (isObject(source) && source.hasOwnProperty('ref')) {
-    resolving = source.resolve ? source.resolve : () => {}
-    rejecting = source.reject ? source.reject : () => {}
+    resolve = source.resolve ? source.resolve : () => {}
+    reject = source.reject ? source.reject : () => {}
     objects = source.objects ? true : null
     source = source.ref
   }
@@ -137,11 +137,9 @@ function bind (vm, key, source, params = {}) {
     }
   })
 
-  if (resolving || resolving) {
-    binding.then((res) => {
-      resolving(res)
-    })
-    .catch((err) => rejecting(err))
+  if (resolve || reject) {
+    binding.then((res) => resolve(res))
+    .catch((err) => reject(err))
   } else {
     return binding
   }
