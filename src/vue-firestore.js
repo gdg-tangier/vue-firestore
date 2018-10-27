@@ -19,11 +19,13 @@ function defineReactive (vm, key, val) {
 }
 
 /**
- * Bind firestore collection source to a key on a Vue instance.
+ * Bind firestore collection.
  *
- * @param {Vue} vm
- * @param {string} key
- * @param {object} source
+ * @param  {Vu} options.vm
+ * @param  {string} options.key
+ * @param  {object} options.source
+ * @param  {function} options.resolve
+ * @param  {function} options.reject
  */
 function collections ({ vm, key, source, resolve, reject }) {
   vm.$firestore[key] = source
@@ -56,7 +58,15 @@ function collections ({ vm, key, source, resolve, reject }) {
   })
 }
 
-// WIP
+/**
+ * Bind as a collection of objects.
+ *
+ * @param  {Vue} options.vm
+ * @param  {string} options.key
+ * @param  {object} options.source
+ * @param  {function} options.resolve
+ * @param  {function} options.reject
+ */
 function collectionOfObjects ({ vm, key, source, resolve, reject }) {
   vm.$firestore[key] = source
   let container = {}
@@ -84,11 +94,13 @@ function collectionOfObjects ({ vm, key, source, resolve, reject }) {
 }
 
 /**
- * Bind firestore doc source to a key on a Vue instance.
+ * Bind firestore document.
  *
- * @param {Vue} vm
- * @param {string} key
- * @param {object} source
+ * @param  {Vue} options.vm
+ * @param  {string} options.key
+ * @param  {object} options.source
+ * @param  {function} options.resolve
+ * @param  {function} options.reject
  */
 function documents ({ vm, key, source, resolve, reject }) {
   vm.$firestore[key] = source
@@ -111,9 +123,10 @@ function documents ({ vm, key, source, resolve, reject }) {
 /**
  * Listen for changes, and bind firestore doc source to a key on a Vue instance.
  *
- * @param {Vue} vm
- * @param {string} key
- * @param {object} source
+ * @param  {Vue} vm
+ * @param  {string} key
+ * @param  {object} source
+ * @param  {Object} params
  */
 function bind (vm, key, source, params = {}) {
   let resolve = null
@@ -121,6 +134,8 @@ function bind (vm, key, source, params = {}) {
   let objects = params.objects ? true : null
 
   if (isObject(source) && source.hasOwnProperty('ref')) {
+    // if the firebase source has (ref) key, we gets the the resolve and reject functions as callbacks
+    // and use them when the promise is resolved or rejected.
     resolve = source.resolve ? source.resolve : () => {}
     reject = source.reject ? source.reject : () => {}
     objects = source.objects ? true : null
@@ -145,7 +160,9 @@ function bind (vm, key, source, params = {}) {
   }
 }
 
-// Initialize.
+/**
+ * Initialize.
+ */
 let init = function () {
   var bindings = this.$options.firestore
   if (typeof bindings === 'function') bindings = bindings.call(this)
@@ -156,7 +173,9 @@ let init = function () {
   }
 }
 
-// Before Destroy.
+/**
+ * Before Destroy.
+ */
 let destroy = function () {
   if (!this.$firestore) return
   for (var key in this.$firestore) {
