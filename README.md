@@ -121,13 +121,13 @@ You can bind your docs/collection manually using `this.$binding`, and wait for d
 ...
 mounted () {
   // Binding Collections
-  this.$binding("users", firebase.collection("users"))
+  this.$binding("users", firestore.collection("users"))
   .then((users) => {
     console.log(users) // => __ob__: Observer
   })
   
   // Binding Docs
-  this.$binding("Ford", firebase.collection("cars").doc("ford"))
+  this.$binding("Ford", firestore.collection("cars").doc("ford"))
   .then((ford) => {
     console.log(ford) // => __ob__: Observer
   }).catch(err => {
