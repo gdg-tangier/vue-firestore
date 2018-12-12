@@ -121,13 +121,13 @@ You can bind your docs/collection manually using `this.$binding`, and wait for d
 ...
 mounted () {
   // Binding Collections
-  this.$binding("users", firebase.firestore().collection("users"))
+  this.$binding("users", firestore.collection("users"))
   .then((users) => {
     console.log(users) // => __ob__: Observer
   })
   
   // Binding Docs
-  this.$binding("Ford", firebase.firestore().collection("cars").doc("ford"))
+  this.$binding("Ford", firestore.collection("cars").doc("ford"))
   .then((ford) => {
     console.log(ford) // => __ob__: Observer
   }).catch(err => {
@@ -136,7 +136,6 @@ mounted () {
 }
 ...
 ```
-Vue firestore latest release supports binding collections as objects, you can bind the collection manually by:`this.$bindCollectionAsObject(key, source)` or you can explecityly do that by adding the `objetcs :true` to firestore function, see the previous exmaple above.
 
 Vue firestore latest release supports binding collections as objects, you can bind the collection manually by `this.$bindCollectionAsObject(key, source)` or you can explicitly do that by adding `{objects: true}` to `firestore()` function, see the previous example above.
 
