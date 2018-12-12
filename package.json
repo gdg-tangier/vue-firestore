@@ -4,7 +4,7 @@
     "description": "Vue plugin for firestore",
     "main": "./dist/vue-firestore.js",
     "scripts": {
-        "test": "jest",
+        "test": "jest --forceExit --detectOpenHandles",
         "lint": "eslint --fix src",
         "build": "webpack"
     },
