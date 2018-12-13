@@ -1,4 +1,4 @@
-import { Vue, firebase, firestore, VueTick } from './TestCase'
+import { Vue, firebase, firestore, VueTick, randomString } from './TestCase'
 
 let vm, collection
 
