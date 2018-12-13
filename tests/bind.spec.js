@@ -21,4 +21,8 @@ describe('vue-firestore', () => {
       expect(vm[collectionName].length).toEqual(1)
       expect(vm[collectionName][0].name).toEqual('item')
     })
+
+    test('Binding collection returns promise', async () => {
+      expect(vm.$binding('someCollections', collection) instanceof Promise).toBe(true)
+    })
 })
