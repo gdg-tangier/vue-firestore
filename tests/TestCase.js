@@ -28,6 +28,16 @@ export function VueTick() {
   })
 }
 
+export function randomString () {
+    var string = '';
+    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    for (var i = 0; i < 5; i++)
+    string += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return string;
+}
+
 export { Vue }
 
 export { firebase }
