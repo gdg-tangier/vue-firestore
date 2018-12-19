@@ -16,15 +16,22 @@ describe('Manual binding', () => {
   })
 
   test('Bind collection manually', async () => {
+    // Bind Collection
     await vm.$binding(collectionName, firestore.collection(collectionName))
     expect(vm[collectionName]).toEqual([])
+    
+    // Add To Collection
     await vm.$firestore[collectionName].add({name: 'item'})
     expect(vm[collectionName].length).toEqual(1)
     expect(vm[collectionName][0].name).toEqual('item')
+
+    // Update Collection Item
     let updatedItem = vm[collectionName][0]
     await vm.$firestore[collectionName].doc(updatedItem['.key']).update({name: 'item2'})
     expect(vm[collectionName].length).toEqual(1)
     expect(vm[collectionName][0].name).toEqual('item2')
+
+    // Delete Collection item
     let deletedItem = vm[collectionName][0]
     await vm.$firestore[collectionName].doc(deletedItem['.key']).delete()
     expect(vm[collectionName].length).toEqual(0)
