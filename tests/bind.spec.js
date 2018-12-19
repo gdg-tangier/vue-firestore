@@ -6,7 +6,7 @@ let documentName = randomString()
 describe('Manual binding', () => {
   beforeEach(async () => {
     collection = firestore.collection('items')
-    doc = firestore.doc('collectionOfDocs/doc')
+    doc = firestore.doc(`collectionOfDocs/doc`)
     vm = new Vue({
       data: () => ({
             //
@@ -38,9 +38,18 @@ describe('Manual binding', () => {
   })
 
   test('Bind document manually', async () => {
+    // Bind Document
     await vm.$binding(documentName, doc)
     expect(vm.$firestore[documentName]).toBe(doc)
     expect(vm[documentName]).toEqual({'.key': 'doc', 'name': 'docName'})
+
+    // Update Document
+    await vm.$firestore[documentName].update({name: 'docName2'})
+    expect(vm[documentName].name).toEqual('docName2')
+
+    // Just making sure that the next tests not going to be failed XD
+    await vm.$firestore[documentName].update({name: 'docName'})
+    expect(vm[documentName].name).toEqual('docName')
   })
 
   test('Binding collection returns promise', async () => {
