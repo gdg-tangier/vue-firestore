@@ -78,12 +78,17 @@ describe('Manual binding', () => {
   })
 
   test('Add/Update/Delete an item to object collection', async () => {
+    // Add to Collection
     await vm.$firestore.persons.add({name: 'item'})
     expect(Object.keys(vm['persons']).length).toEqual(1)
     let objectKey = Object.keys(vm['persons'])[0]
     expect(vm['persons'][objectKey].name).toEqual('item')
+
+    // Update item in collection
     await vm.$firestore.persons.doc(objectKey).update({name: 'item2'})
     expect(vm['persons'][objectKey].name).toEqual('item2')
+
+    // Delete the Item
     await vm.$firestore.persons.doc(objectKey).delete()
     expect(Object.keys(vm['persons']).length).toEqual(0)
   })
