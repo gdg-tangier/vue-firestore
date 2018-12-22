@@ -72,4 +72,8 @@ describe('Manual binding', () => {
   test('Binding document returns promise', async () => {
     expect(vm.$binding('someCollections', doc) instanceof Promise).toBe(true)
   })
+
+  test('Binding collection as object', async () => {
+    expect(typeof vm['persons']).toBe('object')
+  })
 })
