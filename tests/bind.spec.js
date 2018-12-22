@@ -2,6 +2,7 @@ import { Vue, firebase, firestore, VueTick, randomString } from './TestCase'
 
 let vm, collection, doc
 let collectionName = randomString()
+let objectCollectionName = randomString()
 let documentName = randomString()
 describe('Manual binding', () => {
   beforeEach(async () => {
@@ -10,6 +11,18 @@ describe('Manual binding', () => {
     vm = new Vue({
       data: () => ({
             //
+      }),
+      firestore: () => ({
+        persons: {
+          ref: firestore.collection(objectCollectionName),
+          objects: true,
+          resolve: async (response) => {
+            await response
+          },
+          reject: async (error) => {
+            await error
+          }
+        }
       })
     })
     await VueTick()
@@ -19,7 +32,7 @@ describe('Manual binding', () => {
     // Bind Collection
     await vm.$binding(collectionName, firestore.collection(collectionName))
     expect(vm[collectionName]).toEqual([])
-    
+
     // Add To Collection
     await vm.$firestore[collectionName].add({name: 'item'})
     expect(vm[collectionName].length).toEqual(1)
