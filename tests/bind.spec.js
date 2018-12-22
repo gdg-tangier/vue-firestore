@@ -82,5 +82,7 @@ describe('Manual binding', () => {
     expect(Object.keys(vm['persons']).length).toEqual(1)
     let objectKey = Object.keys(vm['persons'])[0]
     expect(vm['persons'][objectKey].name).toEqual('item')
+    await vm.$firestore.persons.doc(objectKey).update({name: 'item2'})
+    expect(vm['persons'][objectKey].name).toEqual('item2')
   })
 })
