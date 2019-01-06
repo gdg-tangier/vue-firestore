@@ -22,6 +22,15 @@ describe('Manual binding', () => {
           reject: async (error) => {
             await error
           }
+        },
+        projects: {
+          ref: firestore.collection('projects'),
+          resolve: async (response) => {
+            await response
+          },
+          reject: async (error) => {
+            await error
+          }
         }
       })
     })
@@ -91,5 +100,12 @@ describe('Manual binding', () => {
     // Delete the Item
     await vm.$firestore.persons.doc(objectKey).delete()
     expect(Object.keys(vm['persons']).length).toEqual(0)
+  })
+
+  test('Can bind multiple references', async () => {
+    await vm.$binding('cars', firestore.collection('cars'))
+    await vm.$binding(documentName, doc)
+    await vm.$bindCollectionAsObject('objects', firestore.collection('objects'))
+    expect(Object.keys(vm.$firestore)).toEqual(['persons', 'projects', 'cars', documentName, 'objects'])
   })
 })
