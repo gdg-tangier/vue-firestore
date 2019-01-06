@@ -1,0 +1,9 @@
+src/
+tests/
+coverage/
+webpack.config.js
+yarn.lock
+package-lock.json
+.travis.yml
+.eslintrc
+.babelrc
