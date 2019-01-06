@@ -207,7 +207,10 @@ let install = function (_Vue) {
 
     // Manually binding
   Vue.prototype.$binding = function (key, source) {
-    this.$firestore = Object.create(null)
+    if (!this.$firestore) {
+      this.$firestore = Object.create(null)
+    }
+
     return bind(this, key, source)
   }
 
