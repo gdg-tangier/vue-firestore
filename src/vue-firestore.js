@@ -213,7 +213,10 @@ let install = function (_Vue) {
 
   // Bind Collection As Object
   Vue.prototype.$bindCollectionAsObject = function (key, source) {
-    this.$firestore = Object.create(null)
+    if (!this.$firestore) {
+      this.$firestore = Object.create(null)
+    }
+
     return bind(this, key, source, { objects: true })
   }
 
