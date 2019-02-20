@@ -3,6 +3,9 @@ import { normalize, ensureRefs, isObject } from './utils/utils'
 // Vue binding
 let Vue
 
+// Plugin options
+let keyName = '.key'
+
 /**
  * Define a reactive property to a given Vue instance.
  *
@@ -35,7 +38,7 @@ function collections ({ vm, key, source, resolve, reject }) {
     doc.docChanges().forEach(snapshot => {
       switch (snapshot.type) {
         case 'added':
-          container.splice(snapshot.newIndex, 0, normalize(snapshot))
+          container.splice(snapshot.newIndex, 0, normalize(snapshot, keyName))
           break
         case 'removed':
           container.splice(snapshot.oldIndex, 1)
@@ -43,9 +46,9 @@ function collections ({ vm, key, source, resolve, reject }) {
         case 'modified':
           if (snapshot.oldIndex !== snapshot.newIndex) {
             container.splice(snapshot.oldIndex, 1)
-            container.splice(snapshot.newIndex, 0, normalize(snapshot))
+            container.splice(snapshot.newIndex, 0, normalize(snapshot, keyName))
           } else {
-            container.splice(snapshot.newIndex, 1, normalize(snapshot))
+            container.splice(snapshot.newIndex, 1, normalize(snapshot, keyName))
           }
           break
       }
@@ -108,7 +111,7 @@ function documents ({ vm, key, source, resolve, reject }) {
   defineReactive(vm, key, container)
   source.onSnapshot((doc) => {
     if (doc.exists) {
-      container = normalize(doc)
+      container = normalize(doc, keyName)
       vm[key] = container
     } else {
       delete vm.$firestore[key]
@@ -198,9 +201,11 @@ let Mixin = {
  * Install function.
  *
  * @param {Vue} _Vue
+ * @param {object} options
  */
-let install = function (_Vue) {
+let install = function (_Vue, options) {
   Vue = _Vue
+  if (options && options.key) keyName = options.key
   Vue.mixin(Mixin)
   var mergeStrats = Vue.config.optionMergeStrategies
   mergeStrats.fireStore = mergeStrats.methods
@@ -234,3 +239,4 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export default install
+
