@@ -12,12 +12,13 @@ export function isObject (val) {
  * Normalize Firebase snapshot into a bindable data record.
  *
  * @param {FirebaseSnapshot} snapshot
+ * @param {string} keyName
  * @return {object}
  */
-export function normalize (snapshot) {
+export function normalize (snapshot, keyName = '.key') {
   var value = snapshot.doc ? snapshot.doc.data() : snapshot.data()
   var out = isObject(value) ? value : { '.value': value }
-  out['.key'] = snapshot.doc ? snapshot.doc.id : snapshot.id
+  out[keyName] = snapshot.doc ? snapshot.doc.id : snapshot.id
   return out
 }
 
@@ -31,3 +32,4 @@ export function ensureRefs (vm) {
     vm.$firestore = Object.create(null)
   }
 }
+
