@@ -34,7 +34,7 @@ vue-firestore will be installed automatically.
 <script src="https://www.gstatic.com/firebasejs/5.3.1/firebase-firestore.js"></script>
 <!-- vue-firestore -->   
 <script src="https://unpkg.com/vue-firestore"></script>
-  
+
 <script>        
   // Firebase config.
   var config = {
@@ -45,7 +45,7 @@ vue-firestore will be installed automatically.
         storageBucket: "your-storage-bucket",
         messagingSenderId: "your-messaing-sender-id"
       }
-        
+
   // Initialize Firebase.
   firebase.initializeApp(config);
 </script>
@@ -125,7 +125,7 @@ mounted () {
   .then((users) => {
     console.log(users) // => __ob__: Observer
   })
-  
+
   // Binding Docs
   this.$binding("Ford", firestore.collection("cars").doc("ford"))
   .then((ford) => {
@@ -143,7 +143,7 @@ The normalize resutls of `$bindCollectionAsObject`:
 
 ```
 {
-    tjlAXoQ3VAoNiJcka9: { 
+    tjlAXoQ3VAoNiJcka9: {
         firstname: "Jhon",
         lastname: "Doe"
     },
@@ -216,7 +216,10 @@ You can customize the name of the `.key` property by passing an option when init
 
 ```javascript
 require('firebase/firestore')
-Vue.use(VueFirestore, {key = 'id'})
+Vue.use(VueFirestore, {
+    key = 'id',         // the name of the property. Default is '.key'.
+    enumerable = false  // wether it is enumerable or not. Default is false.
+})
 ```
 
 This would allow you to do `person.id` instead of `person['.key']`.

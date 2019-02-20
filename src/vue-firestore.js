@@ -5,6 +5,7 @@ let Vue
 
 // Plugin options
 let keyName = '.key'
+let enumerableKey = false
 
 /**
  * Define a reactive property to a given Vue instance.
@@ -38,7 +39,7 @@ function collections ({ vm, key, source, resolve, reject }) {
     doc.docChanges().forEach(snapshot => {
       switch (snapshot.type) {
         case 'added':
-          container.splice(snapshot.newIndex, 0, normalize(snapshot, keyName))
+          container.splice(snapshot.newIndex, 0, normalize(snapshot, keyName, enumerableKey))
           break
         case 'removed':
           container.splice(snapshot.oldIndex, 1)
@@ -46,9 +47,9 @@ function collections ({ vm, key, source, resolve, reject }) {
         case 'modified':
           if (snapshot.oldIndex !== snapshot.newIndex) {
             container.splice(snapshot.oldIndex, 1)
-            container.splice(snapshot.newIndex, 0, normalize(snapshot, keyName))
+            container.splice(snapshot.newIndex, 0, normalize(snapshot, keyName, enumerableKey))
           } else {
-            container.splice(snapshot.newIndex, 1, normalize(snapshot, keyName))
+            container.splice(snapshot.newIndex, 1, normalize(snapshot, keyName, enumerableKey))
           }
           break
       }
@@ -111,7 +112,7 @@ function documents ({ vm, key, source, resolve, reject }) {
   defineReactive(vm, key, container)
   source.onSnapshot((doc) => {
     if (doc.exists) {
-      container = normalize(doc, keyName)
+      container = normalize(doc, keyName, enumerableKey)
       vm[key] = container
     } else {
       delete vm.$firestore[key]
@@ -206,6 +207,7 @@ let Mixin = {
 let install = function (_Vue, options) {
   Vue = _Vue
   if (options && options.key) keyName = options.key
+  if (options && options.enumerable !== undefined) enumerableKey = options.enumerable
   Vue.mixin(Mixin)
   var mergeStrats = Vue.config.optionMergeStrategies
   mergeStrats.fireStore = mergeStrats.methods
@@ -239,4 +241,3 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export default install
-

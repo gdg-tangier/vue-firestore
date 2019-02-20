@@ -13,12 +13,16 @@ export function isObject (val) {
  *
  * @param {FirebaseSnapshot} snapshot
  * @param {string} keyName
+ * @param {boolean} enumerable
  * @return {object}
  */
-export function normalize (snapshot, keyName = '.key') {
+export function normalize (snapshot, keyName = '.key', enumerable = false) {
   var value = snapshot.doc ? snapshot.doc.data() : snapshot.data()
   var out = isObject(value) ? value : { '.value': value }
-  out[keyName] = snapshot.doc ? snapshot.doc.id : snapshot.id
+  Object.defineProperty(out, keyName, {
+    value: snapshot.doc ? snapshot.doc.id : snapshot.id,
+    enumerable: enumerable
+  })
   return out
 }
 
@@ -32,4 +36,3 @@ export function ensureRefs (vm) {
     vm.$firestore = Object.create(null)
   }
 }
-
