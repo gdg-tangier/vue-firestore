@@ -216,7 +216,7 @@ You can customize the name of the `.key` property by passing an option when init
 
 ```javascript
 require('firebase/firestore')
-Vue.use(VueFirestore, {key = 'id'})
+Vue.use(VueFirestore, { key: 'id' })
 ```
 
 This would allow you to do `person.id` instead of `person['.key']`.
