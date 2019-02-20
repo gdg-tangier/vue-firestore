@@ -212,6 +212,17 @@ updatePerson: function (person) {
 }
 ```
 
+You can customize the name of the `.key` property by passing an option when initializing vue-firestore:
+
+```javascript
+require('firebase/firestore')
+Vue.use(VueFirestore, {key = 'id'})
+```
+
+This would allow you to do `person.id` instead of `person['.key']`.
+
+
+
 ## More Resources
 - [Quick Start on Alligator.io](https://alligator.io/vuejs/vue-cloud-firestore/)
 
