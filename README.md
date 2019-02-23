@@ -216,9 +216,10 @@ You can customize the name of the `.key` property by passing an option when init
 
 ```javascript
 require('firebase/firestore')
+
 Vue.use(VueFirestore, {
-    key = 'id',         // the name of the property. Default is '.key'.
-    enumerable = false  // wether it is enumerable or not. Default is false.
+    key: 'id',         // the name of the property. Default is '.key'.
+    enumerable: false  // whether it is enumerable or not. Default is false.
 })
 ```
 
