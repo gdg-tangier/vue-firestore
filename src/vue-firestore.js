@@ -4,8 +4,10 @@ import { normalize, ensureRefs, isObject } from './utils/utils'
 let Vue
 
 // Plugin options
-let keyName = '.key'
-let enumerableKey = false
+let defaultOptions = {
+  keyName: '.key',
+  enumerable: true
+}
 
 /**
  * Define a reactive property to a given Vue instance.
@@ -39,7 +41,7 @@ function collections ({ vm, key, source, resolve, reject }) {
     doc.docChanges().forEach(snapshot => {
       switch (snapshot.type) {
         case 'added':
-          container.splice(snapshot.newIndex, 0, normalize(snapshot, keyName, enumerableKey))
+          container.splice(snapshot.newIndex, 0, normalize(snapshot, defaultOptions))
           break
         case 'removed':
           container.splice(snapshot.oldIndex, 1)
@@ -47,9 +49,9 @@ function collections ({ vm, key, source, resolve, reject }) {
         case 'modified':
           if (snapshot.oldIndex !== snapshot.newIndex) {
             container.splice(snapshot.oldIndex, 1)
-            container.splice(snapshot.newIndex, 0, normalize(snapshot, keyName, enumerableKey))
+            container.splice(snapshot.newIndex, 0, normalize(snapshot, defaultOptions))
           } else {
-            container.splice(snapshot.newIndex, 1, normalize(snapshot, keyName, enumerableKey))
+            container.splice(snapshot.newIndex, 1, normalize(snapshot, defaultOptions))
           }
           break
       }
@@ -112,7 +114,7 @@ function documents ({ vm, key, source, resolve, reject }) {
   defineReactive(vm, key, container)
   source.onSnapshot((doc) => {
     if (doc.exists) {
-      container = normalize(doc, keyName, enumerableKey)
+      container = normalize(doc, defaultOptions)
       vm[key] = container
     } else {
       delete vm.$firestore[key]
@@ -206,8 +208,8 @@ let Mixin = {
  */
 let install = function (_Vue, options) {
   Vue = _Vue
-  if (options && options.key) keyName = options.key
-  if (options && options.enumerable !== undefined) enumerableKey = options.enumerable
+  if (options && options.key) defaultOptions.keyName = options.key
+  if (options && options.enumerable !== undefined) defaultOptions.enumerable = options.enumerable
   Vue.mixin(Mixin)
   var mergeStrats = Vue.config.optionMergeStrategies
   mergeStrats.fireStore = mergeStrats.methods
