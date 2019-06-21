@@ -20,8 +20,6 @@ import 'firebase/firestore'
 var firebase = Firebase.initializeApp(config)
 var firestore = firebase.firestore()
 
-firestore.settings({timestampsInSnapshots: true})
-
 export function VueTick () {
   return new Promise((resolve, reject) => {
     Vue.nextTick(resolve)
