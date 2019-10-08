@@ -141,7 +141,7 @@ Vue firestore latest release supports binding collections as objects, you can bi
 
 The normalized resutls of `$bindCollectionAsObject`:
 
-```
+```javascript
 {
     tjlAXoQ3VAoNiJcka9: {
         firstname: "Jhon",
