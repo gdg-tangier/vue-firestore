@@ -1,26 +1,24 @@
-var webpack = require('webpack');
-var path = require('path')
+require('webpack');
+const path = require('path');
 
 module.exports = {
-    entry: './src/main.js',
-    output: {
-        path: path.resolve(__dirname, './dist'),
-        filename: 'vue-firestore.js',
-        library: 'VueFirestore',
-        libraryTarget: 'umd'
-    },
-
-    plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            compress: { warnings: false },
-            sourceMap: true
-        })
-    ],
-    module: {
-        rules: [{
-            test: /\.js$/,
-            exclude: /node_modules/,
-            loader: "babel-loader"
-        }]
-    }
+  mode: 'production',
+  entry: './src/main.js',
+  output: {
+    path: path.resolve(__dirname, './dist'),
+    filename: 'vue-firestore.js',
+    library: 'VueFirestore',
+    libraryTarget: 'umd'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader'
+        }
+      }
+    ]
+  }
 };
