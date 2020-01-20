@@ -15,7 +15,7 @@ Vue.js binding for firebase cloud firestore.
 
 ### Prerequisites
 
-Firebase `^5.0.0`
+Firebase `^7.6.1`
 
 ### Try it out: [Demo](http://jsbin.com/noviduy/7/edit?html,js,output)
 
