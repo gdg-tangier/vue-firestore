@@ -1,45 +1,52 @@
 {
-    "name": "vue-firestore",
-    "version": "0.3.22",
-    "description": "Vue plugin for firestore",
-    "main": "./dist/vue-firestore.js",
-    "scripts": {
-        "test": "jest --forceExit --detectOpenHandles",
-        "lint": "eslint --fix src",
-        "build": "webpack"
-    },
-    "keywords": [
-        "vue",
-        "firebase",
-        "cloud",
-        "cloud firestore",
-        "realtime"
-    ],
-    "author": "Amrani Houssain",
-    "license": "MIT",
-    "peerDependencies": {
-        "firebase": "^5.x.x"
-    },
-    "devDependencies": {
-        "babel-core": "^6.24.1",
-        "babel-loader": "^6.4.1",
-        "babel-preset-env": "^1.7.0",
-        "babel-preset-stage-2": "^6.18.0",
-        "codecov": "^1.0.1",
-        "eslint": ">=4.18.2",
-        "eslint-config-standard": "^6.2.1",
-        "eslint-plugin-html": "^2.0.0",
-        "eslint-plugin-promise": "^3.4.0",
-        "eslint-plugin-standard": "^2.0.1",
-        "firebase": "^5.0.0",
-        "jest": "^23.6.0",
-        "vue": "^1.0.28",
-        "webpack": "^2.6.1"
-    },
-    "jest": {
-        "collectCoverage": true,
-        "collectCoverageFrom": [
-            "<rootDir>/src/*.js"
-        ]
-    }
+  "name": "vue-firestore",
+  "version": "0.3.22",
+  "description": "Vue plugin for firestore",
+  "main": "./dist/vue-firestore.js",
+  "scripts": {
+    "test": "jest --forceExit --detectOpenHandles",
+    "lint": "eslint --fix src",
+    "build": "webpack"
+  },
+  "keywords": [
+    "vue",
+    "firebase",
+    "cloud",
+    "cloud firestore",
+    "realtime"
+  ],
+  "author": "Amrani Houssain",
+  "license": "MIT",
+  "peerDependencies": {
+    "firebase": "^7.6.1"
+  },
+  "dependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "babel-loader": "^8.0.6",
+    "cross-env": "^6.0.3",
+    "firebase": "^7.6.1",
+    "vue": "^2.6.11"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.7.6",
+    "@babel/runtime": "^7.7.7",
+    "codecov": "^3.6.1",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.9.0",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-vue": "^6.1.2",
+    "jest": "^24.9.0",
+    "prettier": "^1.19.1",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "<rootDir>/src/*.js"
+    ]
+  }
 }
