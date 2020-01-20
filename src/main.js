@@ -1,3 +1,3 @@
-import VueFireStore from './vue-firestore'
+import VueFireStore from './vue-firestore';
 
-export default VueFireStore
+export default VueFireStore;
